@@ -28,11 +28,7 @@ module IronDome
     end
 
     def osv_request(_file_name, packages_and_versions)
-      conn = Faraday.new(URL) do |faraday|
-        faraday.adapter Faraday.default_adapter
-        faraday.headers["Content-Type"] = "application/json"
-        faraday.request :json
-      end
+      conn = Faraday.new(URL)
 
       packages_and_versions.map do |package, version|
         request_body = { version: version, package: { name: package } }
