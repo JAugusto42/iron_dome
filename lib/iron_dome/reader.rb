@@ -20,14 +20,13 @@ module IronDome
       lock_files = Dir.glob(File.join("*.lock"))
       lock_files.each do |file|
         file_lines = File.read(file).lines
-        file_name = File.basename(file)
         packages_and_versions = file_lines.flat_map { |line| line.scan(/\b(\w+) \(([\d.]+)\)/) }.to_h
-        result = osv_request(file_name, packages_and_versions)
-        puts(result)
+        result = osv_request(packages_and_versions)
+        result.reject { |element| element.empty? }
       end
     end
 
-    def osv_request(_file_name, packages_and_versions)
+    def osv_request(packages_and_versions)
       conn = Faraday.new(URL)
 
       packages_and_versions.map do |package, version|
