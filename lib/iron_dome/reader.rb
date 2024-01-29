@@ -22,7 +22,7 @@ module IronDome
         file_lines = File.read(file).lines
         packages_and_versions = file_lines.flat_map { |line| line.scan(/\b(\w+) \(([\d.]+)\)/) }.to_h
         result = osv_request(packages_and_versions)
-        result.reject { |element| element.empty? }
+        puts result
       end
     end
 
@@ -30,15 +30,12 @@ module IronDome
       conn = Faraday.new(URL)
 
       packages_and_versions.map do |package, version|
-        request_body = { version: version, package: { name: package } }
-
-        response = conn.post do |req|
-          req.url "/v1/query"
+        response = conn.post("/v1/query") do |req|
           req.headers["Content-Type"] = "application/json"
-          req.body = request_body.to_json
+          req.body = { version: version, package: { name: package } }.to_json
         end
 
-        JSON.parse(response.body)
+        JSON.parse(response.body) unless response.body == "{}"
       end
     end
   end
