@@ -3,6 +3,8 @@
 require "json"
 require "faraday"
 
+require_relative "requester"
+
 module IronDome
   # read the lock file from the project
   class Reader
@@ -21,21 +23,8 @@ module IronDome
       lock_files.each do |file|
         file_lines = File.read(file).lines
         packages_and_versions = file_lines.flat_map { |line| line.scan(/\b(\w+) \(([\d.]+)\)/) }.to_h
-        result = osv_request(packages_and_versions)
+        result = Requester.osv_request(packages_and_versions)
         puts result
-      end
-    end
-
-    def osv_request(packages_and_versions)
-      conn = Faraday.new(URL)
-
-      packages_and_versions.map do |package, version|
-        response = conn.post("/v1/query") do |req|
-          req.headers["Content-Type"] = "application/json"
-          req.body = { version: version, package: { name: package } }.to_json
-        end
-
-        JSON.parse(response.body) unless response.body == "{}"
       end
     end
   end
