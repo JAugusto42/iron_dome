@@ -11,3 +11,7 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/* # nearly all spec files go over 25 lines
