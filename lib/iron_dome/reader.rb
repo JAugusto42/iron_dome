@@ -34,21 +34,21 @@ module IronDome
       # output the scan result in a sarif file
       sarif_json = convert_to_sarif(read_file)
 
-      File.open('result.sarif', 'w') do |file|
+      File.open("result.sarif", "w") do |file|
         file.puts sarif_json
       end
     end
 
     def convert_to_sarif(result)
       sarif_result = {
-        schema: 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
-        version: '2.1.0',
+        schema: "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+        version: "2.1.0",
         runs: [
           {
             tool: {
               driver: {
-                name: 'OSv.dev API',
-                version: '1.0'
+                name: "OSv.dev API",
+                version: "1.0"
               }
             },
             results: []
@@ -57,16 +57,16 @@ module IronDome
       }
 
       result.each do |vulnerability|
-        vulnerability['vulns'].each do |vuln|
+        vulnerability["vulns"].each do |vuln|
           sarif_result[:runs][0][:results] << {
-            ruleId: vuln['id'],
+            ruleId: vuln["id"],
             message: {
-              text: vuln['summary']
+              text: vuln["summary"]
             },
             locations: [
               physicalLocation: {
                 artifactLocation: {
-                  uri: vuln['affected'][0]['package']['purl']
+                  uri: vuln["affected"][0]["package"]["purl"]
                 },
                 region: {
                   startLine: 1, # Adjust line number based on the actual information in your response
@@ -74,12 +74,12 @@ module IronDome
                 }
               }
             ],
-            references: vuln['references'].map { |ref| { type: 'WEB', url: ref['url'] } }
+            references: vuln["references"].map { |ref| { type: "WEB", url: ref["url"] } }
           }
         end
       end
 
-      return JSON.pretty_generate(sarif_result)
+      JSON.pretty_generate(sarif_result)
     end
   end
 end
