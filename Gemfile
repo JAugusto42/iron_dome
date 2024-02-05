@@ -10,3 +10,10 @@ gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"
 gem "rubocop", "~> 1.21"
 gem "webmock", "~> 3.19", ">= 3.19.1"
+
+group :development do
+  gem "ruby-lsp", require: false
+  gem "sorbet"
+  gem "sorbet-runtime"
+  gem "tapioca", require: false
+end
