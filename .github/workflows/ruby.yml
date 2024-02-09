@@ -17,10 +17,6 @@ jobs:
       - name: Install dependencies
         run: |
           bundle install
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add Gemfile.lock
-          git commit -m "Update Gemfile.lock"
         working-directory: ${{ github.workspace }}
       - name: Run Rubocop
         run: bundle exec rubocop
@@ -41,10 +37,6 @@ jobs:
     - name: Install dependencies
       run: |
         bundle install
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git add Gemfile.lock
-        git commit -m "Update Gemfile.lock"
       working-directory: ${{ github.workspace }}
     - name: Run tests
       run: bundle exec rake
