@@ -5,7 +5,7 @@ require "json"
 
 RSpec.describe IronDome::Requester do
   describe ".osv_request" do
-    let(:packages_and_versions) { { "sinatra" => "2.0.8", "rails" => "6.0.3" } }
+    let(:packages_and_versions) { { "sinatra" => "2.0.8", "rails" => "6.0.3", "ecosystem" => "RubyGems" } }
     let(:url) { "https://api.osv.dev/v1/query" }
     let(:conn) { instance_double(Faraday::Connection) }
     let(:response_body) { '{"some_key": "some_value"}' }
@@ -18,7 +18,7 @@ RSpec.describe IronDome::Requester do
     context "when there is a valid response" do
       it "makes a POST request to the OSV API with correct parameters" do
         packages_and_versions.each do |package, version|
-          request_body = { version: version, package: { name: package } }
+          request_body = { version: version, package: { name: package, ecosystem: "RubyGems" } }
 
           expect(conn).to receive(:post) do |&block|
             request = double("Faraday::Request")
@@ -35,7 +35,7 @@ RSpec.describe IronDome::Requester do
       it "returns parsed JSON response" do
         allow(conn).to receive(:post).and_return(double("Faraday::Response", body: response_body))
         result = described_class.osv_request(packages_and_versions)
-        expect(result).to contain_exactly(json_response, json_response)
+        expect(result).to contain_exactly(json_response, json_response, json_response)
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe IronDome::Requester do
       it "returns nil" do
         allow(conn).to receive(:post).and_return(double("Faraday::Response", body: "{}"))
         result = described_class.osv_request(packages_and_versions)
-        expect(result).to contain_exactly(nil, nil)
+        expect(result).to contain_exactly(nil, nil, nil)
       end
     end
   end
