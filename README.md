@@ -1,4 +1,5 @@
 # IronDome
+![workflow](https://github.com/JAugusto42/iron_dome/actions/workflows/ruby.yml/badge.svg)
 
 TODO: Delete this and the text below, and describe your gem
 
