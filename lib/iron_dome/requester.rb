@@ -12,7 +12,7 @@ module IronDome
       conn = Faraday.new(URL)
 
       packages_and_versions.map do |package, version|
-        request_body = { version: version, package: { name: package } }
+        request_body = { version: version, package: { name: package, ecosystem: "RubyGems" } }
 
         response = conn.post do |req|
           req.url "/v1/query"

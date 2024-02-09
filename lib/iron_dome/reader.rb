@@ -61,7 +61,7 @@ module IronDome
       {
         physicalLocation: {
           artifactLocation: { uri: affected_package["purl"] },
-          region: { startLine: 1, startColumn: 1 }
+          region: { startLine: nil, startColumn: nil }
         }
       }
     end
