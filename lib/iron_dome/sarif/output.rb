@@ -2,6 +2,7 @@
 
 module IronDome
   module Sarif
+    # this class deal with sarif output
     class Output
       def initialize; end
 
