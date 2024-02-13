@@ -29,7 +29,12 @@ module IronDome
       packages_and_versions = file_lines.flat_map { |line| line.scan(/\b(\w+) \(([\d.]+)\)/) }.to_h
       result = Requester.osv_request(packages_and_versions)
       result.compact!
+      output_sarif_file_format(result)
+    end
+
+    def output_sarif_file_format(result)
       IronDome::Sarif::Output.new.output_report(result) # add options verification to do the output
+      puts ":: Sarif file outputed"
     end
   end
 end
