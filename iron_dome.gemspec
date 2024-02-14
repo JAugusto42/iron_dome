@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "colorize", "~> 1.1"
   spec.add_dependency "faraday", "~> 2.9"
   spec.add_dependency "rake", "~> 13.0"
 end
