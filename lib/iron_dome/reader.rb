@@ -1,12 +1,5 @@
 # frozen_string_literal: true
 
-require "json"
-require "faraday"
-
-require_relative "requester"
-require_relative "sarif/output"
-require_relative "output"
-
 module IronDome
   # The Reader class is responsible for reading lock files from the project and generating SARIF reports.
   class Reader
@@ -30,22 +23,66 @@ module IronDome
       file_lines = File.read(file).lines
       packages_and_versions = file_lines.flat_map { |line| line.scan(/\b(\w+) \(([\d.]+)\)/) }.to_h
       puts "Verifying vulnerabilities on osv database ..."
-      result = Requester.osv_request(packages_and_versions)
-      result.compact!
-      system_output(result)
-      output_sarif_file_format(result) unless result # add options verification to do the output
+      results = Requester.osv_request(packages_and_versions)
+      results.compact!
+      system_output(results)
+      output_sarif_file_format(results) unless results # add options verification to do the output
     end
 
-    def output_sarif_file_format(result)
+    def output_sarif_file_format(results)
       # method to call the module to generate the sarif report
       puts "Generating the sarif output ..."
-      IronDome::Sarif::Output.new.output_report(result)
-      puts ":: Sarif file outputed"
+      IronDome::Sarif::Output.new.output_report(results)
+      puts "Sarif file outputed"
     end
 
-    def system_output(result)
-      # method to call module to output the result on current shell.
-      puts "No vulnerabiities founded" if result.empty?
+    def system_output(results)
+      # method to call module to output the results on current shell.
+      if results.empty?
+        puts "No vulnerabiities founded"
+        return
+      end
+
+      build_output(results)
+    end
+
+    def build_output(results)
+      # Build the terminal output but maybe we will need to improve this methods.
+      puts ":: Vulnerabilities found:"
+      results.each do |result|
+        result["vulns"].each do |vuln|
+          print_vulnerability_info(vuln)
+        end
+      end
+    end
+
+    def print_vulnerability_info(vuln)
+      package_name = extract_package_name(vuln)
+      version_fixed = extract_version_fixed(vuln)
+      summary = vuln["summary"]
+      details = vuln["details"]
+
+      print_info(package_name, version_fixed, summary, details)
+    end
+
+    def extract_package_name(vuln)
+      affected_package = vuln["affected"].first
+      affected_package["package"]["name"]
+    end
+
+    def extract_version_fixed(vuln)
+      affected_package = vuln["affected"].first
+      version_ranges = affected_package["ranges"].first
+      version_ranges["events"].last["fixed"]
+    end
+
+    def print_info(package_name, version_fixed, summary, details)
+      puts "-------------------------------------".colorize(:blue)
+      puts "Package Name: #{package_name}".colorize(:magenta)
+      puts "Summary: #{summary}".colorize(:yellow)
+      puts "Details: #{details}".colorize(:cyan)
+      puts "Version fixed: #{version_fixed}".colorize(:green)
+      puts "-------------------------------------".colorize(:blue)
     end
   end
 end
