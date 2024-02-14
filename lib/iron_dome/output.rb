@@ -2,6 +2,5 @@
 
 module IronDome
   class Output
-
   end
 end
