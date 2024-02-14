@@ -15,7 +15,7 @@ module IronDome
 
     def read_file
       # read the lockfile, Gemfile.lock for now
-      lock_files = Dir.glob("*.lock")
+      lock_files = Dir.glob("Gemfile.lock")
       lock_files.map { |file| process_lock_file(file) }
     end
 
@@ -26,7 +26,7 @@ module IronDome
       results = Requester.osv_request(packages_and_versions)
       results.compact!
       system_output(results)
-      output_sarif_file_format(results) unless results # add options verification to do the output
+      output_sarif_file_format(results) unless results.empty? # add options verification to do the output
     end
 
     def output_sarif_file_format(results)
