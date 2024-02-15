@@ -5,7 +5,11 @@ module IronDome
   class Reader
     URL = "https://api.osv.dev/v1/query"
 
-    def initialize; end
+    attr_reader :options
+
+    def initialize(options)
+      @options = options
+    end
 
     def call
       read_file
@@ -26,7 +30,7 @@ module IronDome
       results = Requester.osv_request(packages_and_versions)
       results.compact!
       system_output(results)
-      output_sarif_file_format(results) unless results.empty? # add options verification to do the output
+      output_sarif_file_format(results) unless results.empty? || options[:sarif_output] == false
     end
 
     def output_sarif_file_format(results)

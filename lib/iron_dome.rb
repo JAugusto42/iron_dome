@@ -3,6 +3,7 @@
 require "json"
 require "faraday"
 require "colorize"
+require 'optparse'
 
 require_relative "iron_dome/requester"
 require_relative "iron_dome/sarif/output"
@@ -16,7 +17,16 @@ module IronDome
   # class entry, this is the entrypoint of the gem.
   class Entry
     def main
-      Reader.new.call
+      options = {}
+      OptionParser.new do |opts|
+        opts.banner = "Usage: iron_dome [options]"
+
+        opts.on("-o", "--output", "Generate a sarif format file report.") do |output|
+          options[:sarif_output] = output
+        end
+      end.parse!
+
+      Reader.new(options).call
     end
   end
 end
