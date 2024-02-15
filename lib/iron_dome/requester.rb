@@ -4,24 +4,23 @@ require "json"
 require "faraday"
 
 module IronDome
-  # Module responsible for requesting the vulnerability database
   class Requester
     URL = "https://api.osv.dev/v1/query"
+    FARADAY_OPTIONS = { headers: { "Content-Type" => "application/json" } }.freeze
+    CONN = Faraday.new(URL, FARADAY_OPTIONS)
 
     def self.osv_request(packages_and_versions)
-      conn = Faraday.new(URL)
+      packages_and_versions.each_slice(5).flat_map do |batch|
+        batch.map { |package, version| query_osv(package, version) }
+      end.compact
+    rescue Faraday::ClientError, Faraday::ConnectionFailed, Faraday::TimeoutError => e
+      puts "Error: #{e.message}"
+      []
+    end
 
-      packages_and_versions.map do |package, version|
-        request_body = { version: version, package: { name: package, ecosystem: "RubyGems" } }
-
-        response = conn.post do |req|
-          req.url "/v1/query"
-          req.headers["Content-Type"] = "application/json"
-          req.body = request_body.to_json
-        end
-
-        JSON.parse(response.body) unless response.body == "{}"
-      end
+    def self.query_osv(package, version)
+      response = CONN.post("/v1/query", { version: version, package: { name: package, ecosystem: "RubyGems" } }.to_json)
+      JSON.parse(response.body) unless response.body == "{}"
     end
   end
 end
