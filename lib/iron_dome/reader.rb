@@ -39,11 +39,13 @@ module IronDome
     def system_output(results)
       # method to call module to output the results on current shell.
       if results.empty?
-        puts "No vulnerabiities founded"
+        puts "No vulnerabiities founded".colorize(:green)
         return
       end
 
       build_output(results)
+      total_vulns = results.first["vulns"].count
+      puts "#{total_vulns} vulnerabilities founded.".colorize(:red)
     end
 
     def build_output(results)
