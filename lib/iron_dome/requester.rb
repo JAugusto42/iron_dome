@@ -4,6 +4,7 @@ require "json"
 require "faraday"
 
 module IronDome
+  # The requester class responsable to deal with osv database request and result.
   class Requester
     URL = "https://api.osv.dev/v1/query"
     FARADAY_OPTIONS = { headers: { "Content-Type" => "application/json" } }.freeze

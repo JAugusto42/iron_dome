@@ -3,7 +3,7 @@
 require "json"
 require "faraday"
 require "colorize"
-require 'optparse'
+require "optparse"
 
 require_relative "iron_dome/requester"
 require_relative "iron_dome/sarif/output"
