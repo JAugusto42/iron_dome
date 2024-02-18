@@ -46,18 +46,21 @@ module IronDome
       end
 
       build_output(results)
-      total_vulns = results.first["vulns"].count
-      puts "#{total_vulns} vulnerabilities founded.".colorize(:red)
     end
 
     def build_output(results)
       # Build the terminal output but maybe we will need to improve this methods.
+      total_vulns = 0
+
       puts ":: Vulnerabilities found:"
       results.each do |result|
         result["vulns"].each do |vuln|
           print_vulnerability_info(vuln)
+          total_vulns += 1
         end
       end
+
+      puts "#{total_vulns} vulnerabilities founded.".colorize(:red)
     end
 
     def print_vulnerability_info(vuln)
