@@ -2,6 +2,7 @@
 
 require "json"
 require "faraday"
+require "concurrent"
 
 module IronDome
   # The requester class responsable to deal with osv database request and result.
@@ -11,9 +12,15 @@ module IronDome
     CONN = Faraday.new(URL, FARADAY_OPTIONS)
 
     def self.osv_request(packages_and_versions)
-      packages_and_versions.each_slice(5).flat_map do |batch|
-        batch.map { |package, version| query_osv(package, version) }
-      end.compact
+      futures = packages_and_versions.each_slice(5).map do |batch|
+        Concurrent::Future.execute { process_batch(batch) }
+      end
+
+      futures.flat_map(&:value).compact
+    end
+
+    def self.process_batch(batch)
+      batch.map { |package, version| query_osv(package, version) }
     rescue Faraday::ClientError, Faraday::ConnectionFailed, Faraday::TimeoutError => e
       puts "Error: #{e.message}"
       []
