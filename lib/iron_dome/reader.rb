@@ -30,7 +30,7 @@ module IronDome
       results = Requester.osv_request(packages_and_versions)
       results.compact!
       system_output(results)
-      output_sarif_file_format(results) unless results.empty? || options[:sarif_output] == false
+      output_sarif_file_format(results) if options[:sarif_output] == true
     end
 
     def output_sarif_file_format(results)
