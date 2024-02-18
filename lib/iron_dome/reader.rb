@@ -3,8 +3,6 @@
 module IronDome
   # The Reader class is responsible for reading lock files from the project and generating SARIF reports.
   class Reader
-    URL = "https://api.osv.dev/v1/query"
-
     attr_reader :options
 
     def initialize(options)
