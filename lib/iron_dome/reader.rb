@@ -87,7 +87,7 @@ module IronDome
       puts "-------------------------------------".colorize(:blue)
       puts "Package Name: #{package_name}".colorize(:magenta)
       puts "Summary: #{summary}".colorize(:yellow)
-      puts "Details: #{details}".colorize(:cyan)
+      puts "Details: #{details}".colorize(:cyan) if options[:detail] == true
       puts "Version fixed: #{version_fixed}".colorize(:green)
       puts "-------------------------------------".colorize(:blue)
     end

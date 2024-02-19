@@ -19,10 +19,12 @@ module IronDome
     def main
       options = {}
       OptionParser.new do |opts|
-        opts.banner = "Usage: iron_dome [options]"
-
         opts.on("-o", "--output", "Generate a sarif format file report.") do |output|
           options[:sarif_output] = output
+        end
+
+        opts.on("-d", "--detail", "Show vulnerability details.") do |detail|
+          options[:detail] = detail
         end
       end.parse!
 
