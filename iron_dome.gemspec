@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Jose Augusto"]
   spec.email = ["joseaugusto.881@outlook.com"]
 
-  spec.summary = "A vulnerability scanner for dependencies."
+  spec.summary = "A vulnerability scanner for ruby projects dependencies"
   spec.homepage = "https://github.com/JAugusto42/iron_dome"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
