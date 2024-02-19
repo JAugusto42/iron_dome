@@ -4,7 +4,9 @@
 A SCA scanner for ruby applications, read the gemfile.lock verify vulnerabilities use osv database.
 
 ## Installation
+On root dir of the gem run:
 
+    $ gem build
     $ gem install iron_dome
 
 ## Usage
