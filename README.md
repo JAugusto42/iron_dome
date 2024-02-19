@@ -4,20 +4,20 @@
 A SCA scanner for ruby applications, read the gemfile.lock verify vulnerabilities use osv database.
 
 ## Installation
-On root dir of the gem run:
 
-    $ gem build
     $ gem install iron_dome
 
 ## Usage
 
 After install the gem just run the follow command on main directory of your application
-this directory must have the Gemfile.lock
+this directory must have the Gemfile.lock, you can also run on a ci/cd pipeline.
 
     $ iron_dome
 
 ## Output Example
+
 ![alt text](image.png)
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
