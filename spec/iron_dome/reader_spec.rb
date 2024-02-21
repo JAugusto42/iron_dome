@@ -35,7 +35,9 @@ RSpec.describe IronDome::Reader do
   describe "#system_output" do
     it "outputs results to the shell" do
       results = []
-      expect { described_class.new({}).send(:system_output, results) }.to output("\e[0;32;49mNo vulnerabiities founded\e[0m\n").to_stdout
+      expect do
+        described_class.new({}).send(:system_output, results)
+      end.to output("\e[0;32;49mNo vulnerabiities founded\e[0m\n").to_stdout
     end
   end
 end
