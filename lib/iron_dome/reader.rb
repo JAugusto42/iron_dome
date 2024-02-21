@@ -41,7 +41,7 @@ module IronDome
     def system_output(results)
       # method to call module to output the results on current shell.
       if results.empty?
-        puts "No vulnerabiities founded".colorize(:green)
+        puts "No vulnerabilities founded".colorize(:green)
         return
       end
 
