@@ -35,7 +35,7 @@ module IronDome
       # method to call the module to generate the sarif report
       puts "Generating the sarif output ..."
       IronDome::Sarif::Output.new.output_report(results)
-      puts "Sarif file outputed"
+      puts "Sarif file outputted"
     end
 
     def system_output(results)
@@ -50,35 +50,35 @@ module IronDome
 
     def build_output(results)
       # Build the terminal output but maybe we will need to improve this methods.
-      total_vulns = 0
+      total_vulnerabilities = 0
 
-      puts ":: Vulnerabilities found:"
+      puts ":: Vulnerabilities found:".colorize(:red)
       results.each do |result|
-        result["vulns"].each do |vuln|
-          print_vulnerability_info(vuln)
-          total_vulns += 1
+        result["vulns"].each do |vulnerability|
+          print_vulnerability_info(vulnerability)
+          total_vulnerabilities += 1
         end
       end
 
-      puts "#{total_vulns} vulnerabilities founded.".colorize(:red)
+      puts "#{total_vulnerabilities} vulnerabilities founded.".colorize(:light_red)
     end
 
-    def print_vulnerability_info(vuln)
-      package_name = extract_package_name(vuln)
-      version_fixed = extract_version_fixed(vuln)
-      summary = vuln["summary"]
-      details = vuln["details"]
+    def print_vulnerability_info(vulnerabilities)
+      package_name = extract_package_name(vulnerabilities)
+      version_fixed = extract_version_fixed(vulnerabilities)
+      summary = vulnerabilities["summary"]
+      details = vulnerabilities["details"]
 
       print_info(package_name, version_fixed, summary, details)
     end
 
-    def extract_package_name(vuln)
-      affected_package = vuln["affected"].first
+    def extract_package_name(vulnerability)
+      affected_package = vulnerability["affected"].first
       affected_package["package"]["name"]
     end
 
-    def extract_version_fixed(vuln)
-      affected_package = vuln["affected"].first
+    def extract_version_fixed(vulnerability)
+      affected_package = vulnerability["affected"].first
       version_ranges = affected_package["ranges"].first
       version_ranges["events"].last["fixed"]
     end
