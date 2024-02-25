@@ -1,0 +1,44 @@
+{
+  "vulns": [
+    {
+      "id": "OSV-2020-999",
+      "summary": "Security vulnerability in the addressable gem",
+      "details": "Details of the vulnerability...",
+      "modified": "2022-04-13T03:04:39.780694Z",
+      "published": "2020-07-04T00:00:01.948828Z",
+      "references": [
+        {
+          "type": "REPORT",
+          "url": "https://example.com/vulnerability-report"
+        }
+      ],
+      "affected": [
+        {
+          "package": {
+            "name": "addressable",
+            "ecosystem": "RubyGems",
+            "purl": "pkg:rubygems/addressable"
+          },
+          "ranges": [
+            {
+              "type": "RUBY_VERSION",
+              "vulnerable": ">= 2.3.8, < 2.5.0",
+              "patched": ">= 2.5.0"
+            }
+          ],
+          "versions": [
+            "2.3.8",
+            "2.4.5"
+          ],
+          "ecosystem_specific": {
+            "severity": "HIGH"
+          },
+          "database_specific": {
+            "source": "https://example.com/vulnerability-database"
+          }
+        }
+      ],
+      "schema_version": "1.4.0"
+    }
+  ]
+}
