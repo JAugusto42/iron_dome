@@ -14,6 +14,18 @@ this directory must have the Gemfile.lock, you can also run on a ci/cd pipeline.
 
     $ iron_dome
 
+### Theres some optional params you can use, like, -o or --output and -d or --detail
+
+This will generate a sarif file format.
+
+    $ iron_dome -o
+    $ iron_dome --output
+
+This will show details on the current shell session like the output example below.
+
+    $ iron_dome -d
+    $ iron_dome --detail
+
 ## Output Example
 
 ![alt text](image.png)
