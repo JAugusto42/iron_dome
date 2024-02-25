@@ -18,6 +18,11 @@ this directory must have the Gemfile.lock, you can also run on a ci/cd pipeline.
 
 ![alt text](image.png)
 
+## Supported language and lockfile format
+
+| Ruby      | Gemfile.lock    |
+|-----------|-----------------|
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
