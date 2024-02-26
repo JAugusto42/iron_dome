@@ -52,7 +52,7 @@ jobs:
           bundler-cache: true
       - name: Install dependencies
         run: |
-          bundle install iron_dome
+          gem install iron_dome
         working-directory: ${{ github.workspace }}
       - name: Run IronDome
         run: iron_dome
