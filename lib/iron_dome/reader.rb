@@ -27,7 +27,7 @@ module IronDome
       puts "Verifying vulnerabilities on osv database ..."
       results = Requester.osv_request(packages_and_versions)
       results.compact!
-      system_output(results)
+      system_output(results) unless options[:sarif_output] == true
       output_sarif_file_format(results) if options[:sarif_output] == true
     end
 
