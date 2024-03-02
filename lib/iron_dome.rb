@@ -16,7 +16,10 @@ module IronDome
 
   # class entry, this is the entrypoint of the gem.
   class Entry
+    # rubocop:disable Metrics/MethodLength
     def main
+      puts display_ascii_art
+
       options = {}
       OptionParser.new do |opts|
         opts.on("-o", "--output", "Generate a sarif format file report.") do |output|
@@ -29,6 +32,19 @@ module IronDome
       end.parse!
 
       Reader.new(options).call
+    end
+    # rubocop:enable Metrics/MethodLength
+
+    def display_ascii_art
+      <<-ART
+  ██╗██████╗  ██████╗ ███╗   ██╗██████╗  ██████╗ ███╗   ███╗███████╗
+  ██║██╔══██╗██╔═══██╗████╗  ██║██╔══██╗██╔═══██╗████╗ ████║██╔════╝
+  ██║██████╔╝██║   ██║██╔██╗ ██║██║  ██║██║   ██║██╔████╔██║█████╗
+  ██║██╔══██╗██║   ██║██║╚██╗██║██║  ██║██║   ██║██║╚██╔╝██║██╔══╝
+  ██║██║  ██║╚██████╔╝██║ ╚████║██████╔╝╚██████╔╝██║ ╚═╝ ██║███████╗
+  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝
+
+      ART
     end
   end
 end
