@@ -77,7 +77,7 @@ jobs:
           mv * $HOME/dawnscanner/kb/
         working-directory: ${{ github.workspace }}
       - name: Run dawn scanner
-        run: dawn scan
+        run: dawn scan .
 
 
 
