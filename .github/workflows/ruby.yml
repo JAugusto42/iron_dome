@@ -75,6 +75,7 @@ jobs:
           rm kb.tar.gz
           mkdir -p $HOME/dawnscanner/kb
           mv * $HOME/dawnscanner/kb/
+          ls
         working-directory: ${{ github.workspace }}
       - name: Run dawn scanner
         run: dawn scan .
