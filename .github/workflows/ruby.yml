@@ -75,8 +75,9 @@ jobs:
           rm kb.tar.gz
           mkdir -p $HOME/dawnscanner/kb
           mv * $HOME/dawnscanner/kb/
-          chmod -r /home/runner/work/iron_dome/Gemfile.lock
         working-directory: ${{ github.workspace }}
       - name: Run dawn scanner
-        run: dawn scan /home/runner/work/iron_dome
+        run: |
+          chmod -r /home/runner/work/iron_dome/Gemfile.lock
+          dawn scan 
 
