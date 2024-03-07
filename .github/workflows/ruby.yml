@@ -72,7 +72,8 @@ jobs:
           gem install dawnscanner
           wget https://github.com/thesp0nge/dawnscanner_knowledge_base/releases/download/v20240116/kb.tar.gz
           tar -vzxf kb.tar.gz
-          mv owasp_ror_cheatsheet/ generic_check/ bulletin/ kb* $HOME/dawnscanner/kb
+          rm kb.tar.gz
+          mv * $HOME/dawnscanner/kb
         working-directory: ${{ github.workspace }}
       - name: Run dawn scanner
         run: dawn scan
