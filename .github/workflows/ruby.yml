@@ -73,6 +73,7 @@ jobs:
           wget https://github.com/thesp0nge/dawnscanner_knowledge_base/releases/download/v20240116/kb.tar.gz
           tar -vzxf kb.tar.gz
           rm kb.tar.gz
+          mkdir -p $HOME/dawnscanner/kb
           mv * $HOME/dawnscanner/kb/
         working-directory: ${{ github.workspace }}
       - name: Run dawn scanner
