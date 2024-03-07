@@ -78,5 +78,5 @@ jobs:
           ls
         working-directory: ${{ github.workspace }}
       - name: Run dawn scanner
-        run: dawn scan ${{ github.workspace }}
+        run: dawn scan .
 
