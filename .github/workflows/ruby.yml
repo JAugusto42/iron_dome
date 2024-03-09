@@ -79,6 +79,4 @@ jobs:
         working-directory: ${{ github.workspace }}
       - name: Run dawn scanner
         run: |
-          chmod -r /home/runner/work/iron_dome/Gemfile.lock
-          dawn scan 
-
+          dawn scan ${{ github.workspace }}
