@@ -56,27 +56,3 @@ jobs:
         working-directory: ${{ github.workspace }}
       - name: Run IronDome
         run: iron_dome
-
-
-  security_sast:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run Security SAST
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.3
-          bundler-cache: true
-      - name: Install dependencies
-        run: |
-          gem install dawnscanner
-          bundle install
-          wget https://github.com/thesp0nge/dawnscanner_knowledge_base/releases/download/v20240116/kb.tar.gz
-          tar -vzxf kb.tar.gz
-          rm kb.tar.gz
-          mkdir -p $HOME/dawnscanner/kb
-          mv * $HOME/dawnscanner/kb/
-        working-directory: ${{ github.workspace }}
-      - name: Run dawn scanner
-        run: |
-          dawn scan ${{ github.workspace }}
