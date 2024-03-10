@@ -10,15 +10,19 @@ module IronDome
     end
 
     def call
-      read_file
+      read_lock_file
     end
 
     private
 
-    def read_file
-      # read the lockfile, Gemfile.lock for now
-      lock_files = Dir.glob("Gemfile.lock")
-      lock_files.map { |file| process_lock_file(file) }
+    def read_lock_file
+      lock_file = Dir.glob("Gemfile.lock")
+      if lock_file.empty?
+        puts "Not able to find Gemfile.lock ..."
+        return
+      end
+
+      lock_file.map { |file| process_lock_file(file) }
     end
 
     def process_lock_file(file)
