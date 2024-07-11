@@ -19,4 +19,3 @@
 - Improvement in code architecture
 - Improvement in specs
 - When -o or --output is given as a param, theres no output on terminal only on a sarif file
-
