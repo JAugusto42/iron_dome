@@ -14,7 +14,7 @@ require_relative "iron_dome/reader"
 module IronDome
   class Error < StandardError; end
 
-  # class entry, this is the entrypoint of the gem.
+  # class entry, this is the main class of the gem.
   class Entry
     # rubocop:disable Metrics/MethodLength
     def main
